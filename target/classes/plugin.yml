@@ -1,0 +1,13 @@
+main: net.greenfieldmc.core.GreenfieldCore
+version: 2.2.0
+name: GreenfieldCore
+author: NJDaeger
+api-version: 1.21
+softdepend:
+  - Vault
+  - CoreProtect
+  - AuthenticationHub
+  - Vault
+  - dynmap
+  - Essentials
+  - WorldEdit

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GreenfieldCore">
+    <output-path>$PROJECT_DIR$/../1.21.4 paper server/plugins</output-path>
+    <root id="archive" name="GreenfieldCore.jar">
+      <element id="module-output" name="GreenfieldCore" />
+    </root>
+  </artifact>
+</component>
