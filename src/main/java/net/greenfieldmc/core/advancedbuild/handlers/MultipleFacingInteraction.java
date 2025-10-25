@@ -6,6 +6,7 @@ import net.greenfieldmc.core.shared.services.ICoreProtectService;
 import net.greenfieldmc.core.shared.services.IWorldEditService;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import org.bukkit.Material;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -31,6 +32,7 @@ public class MultipleFacingInteraction extends InteractionHandler {
     @Override
     public void onRightClickBlock(PlayerInteractEvent event) {
         if (!event.getPlayer().isSneaking()) return;
+        if (event.getPlayer().getInventory().getItemInMainHand().getType() != Material.AIR) return;
 
         var blockDataInHand = event.getPlayer().getInventory().getItemInMainHand().getType().isBlock()
                 ? event.getPlayer().getInventory().getItemInMainHand().getType().createBlockData()
