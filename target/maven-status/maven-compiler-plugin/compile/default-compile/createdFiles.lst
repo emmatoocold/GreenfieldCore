@@ -1,9 +1,12 @@
 net\greenfieldmc\core\advancedbuild\handlers\TurtleEggInteraction.class
 net\greenfieldmc\core\advancedbuild\InteractPredicate.class
+net\greenfieldmc\core\testresult\arguments\AttemptingUserArgument$ArgumentMode.class
 net\greenfieldmc\core\advancedbuild\handlers\FlowerPotInteraction$1.class
 net\greenfieldmc\core\advancedbuild\handlers\SeaPickleInteraction.class
+net\greenfieldmc\core\advancedbuild\handlers\IronDoorsInteraction.class
 net\greenfieldmc\core\advancedbuild\handlers\SeaPickleInteraction$PickleSession.class
 net\greenfieldmc\core\advancedbuild\handlers\FlowerPotInteraction$FlowerPotSession.class
 net\greenfieldmc\core\advancedbuild\handlers\FlowerPotInteraction.class
+net\greenfieldmc\core\advancedbuild\handlers\PressurePlateInteraction.class
 net\greenfieldmc\core\advancedbuild\handlers\TurtleEggInteraction$EggSession.class
 net\greenfieldmc\core\advancedbuild\EntityInteractPredicate.class

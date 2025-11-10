@@ -103,7 +103,9 @@ public class AdvBuildServiceImpl extends ModuleService<IAdvBuildService> impleme
                 new ItemFrameInteraction(worldEditService, coreProtectService),
                 new SeaPickleInteraction(worldEditService, coreProtectService),
                 new TurtleEggInteraction(worldEditService, coreProtectService),
-                new FlowerPotInteraction(worldEditService, coreProtectService)
+                new FlowerPotInteraction(worldEditService, coreProtectService),
+                new PressurePlateInteraction(worldEditService, coreProtectService),
+                new IronDoorsInteraction(worldEditService, coreProtectService)
         );
     }
 
