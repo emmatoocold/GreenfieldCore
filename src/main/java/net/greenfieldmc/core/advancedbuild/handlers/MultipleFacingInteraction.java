@@ -15,7 +15,7 @@ public class MultipleFacingInteraction extends InteractionHandler {
 
     public MultipleFacingInteraction(IWorldEditService worldEditService, ICoreProtectService coreProtectService) {
         super(worldEditService, coreProtectService, (InteractPredicate) (event) ->
-                (event.getClickedBlock() != null && event.getClickedBlock().getBlockData() instanceof MultipleFacing)
+                ((event.getClickedBlock() != null && event.getClickedBlock().getBlockData() instanceof MultipleFacing && event.getPlayer().getInventory().getItemInMainHand().getType() == Material.AIR))
                         || (event.getPlayer().getInventory().getItemInMainHand().getType().isBlock() && event.getPlayer().getInventory().getItemInMainHand().getType().createBlockData() instanceof MultipleFacing));
     }
 
@@ -32,7 +32,6 @@ public class MultipleFacingInteraction extends InteractionHandler {
     @Override
     public void onRightClickBlock(PlayerInteractEvent event) {
         if (!event.getPlayer().isSneaking()) return;
-        if (event.getPlayer().getInventory().getItemInMainHand().getType() != Material.AIR) return;
 
         var blockDataInHand = event.getPlayer().getInventory().getItemInMainHand().getType().isBlock()
                 ? event.getPlayer().getInventory().getItemInMainHand().getType().createBlockData()

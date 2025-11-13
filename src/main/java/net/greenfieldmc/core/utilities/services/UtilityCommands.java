@@ -52,13 +52,9 @@ public class UtilityCommands extends ModuleService<UtilityCommands> implements I
         CommandBuilder.of("isprime")
                 .permission("greenfieldcore.isprime")
                 .description("Check if a number is prime.")
-                .then("number", PdkArgumentTypes.integer())
+                .then("number", PdkArgumentTypes.integer(2,10000))
                 .executes(ctx -> {
                     int number = ctx.getTyped("number", Integer.class);
-                    if (number <= 1) {
-                        ctx.asPlayer().sendMessage("§c" + number + " is not prime (must be greater than 1).");
-                        return;
-                    }
                     java.util.List<Integer> divisors = new java.util.ArrayList<>();
                     for (int i = 2; i <= Math.sqrt(number); i++) {
                         if (number % i == 0) {

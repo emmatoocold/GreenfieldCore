@@ -27,25 +27,23 @@ public class SwitchInteraction extends InteractionHandler {
             var player = event.getPlayer();
             var mainHand = player.getInventory().getItemInMainHand().getType();
             var clicked = event.getClickedBlock();
-            if (clicked == null) return false;
-            return (mainHand == Material.AIR && isSwitch(clicked.getType()))
-                    || (mainHand.isBlock() && isSwitch(mainHand));
+            return (mainHand == Material.AIR && clicked != null && clicked.getType().createBlockData() instanceof Switch) || (mainHand.createBlockData() instanceof Switch);
         });
     }
 
     @Override
     public TextComponent getInteractionDescription() {
-        return Component.text("Allow unnatural placement and state control of switches (buttons, levers, etc). Shift-right-click to toggle, shift-place to use saved state.");
+        return Component.text("Allow unnatural placement and state control of switches (buttons, levers, etc).");
     }
 
     @Override
     public TextComponent getInteractionUsage() {
-        return Component.text("Shift and right click to place or toggle a switch type block. Shift-place to use saved powered state.");
+        return Component.text("Shift and right click with a switch type block in hand to place, or with and empty hand toggle a switch type block. Shift-place to use saved powered state.");
     }
 
     @Override
     public TextComponent getMaterialListText() {
-        return Component.text("Any block that is a button or lever.");
+        return Component.text("Any block that is a form of a switch. (button, lever)");
     }
 
     @Override
@@ -56,21 +54,19 @@ public class SwitchInteraction extends InteractionHandler {
         UUID uuid = player.getUniqueId();
 
         // Shift right-click with empty hand: toggle powered state and save to session
-        if (block != null && player.isSneaking() && player.getInventory().getItemInMainHand().getType() == Material.AIR && isSwitch(block.getType())) {
-            if (block.getBlockData() instanceof Switch sw) {
-                boolean newPowered = !sw.isPowered();
-                sw.setPowered(newPowered);
-                block.setBlockData(sw, false);
-                sessions.put(uuid, newPowered);
+        if (block != null && player.isSneaking() && player.getInventory().getItemInMainHand().getType() == Material.AIR && block.getBlockData()instanceof Switch sw) {
+            boolean newPowered = !sw.isPowered();
+            sw.setPowered(newPowered);
+            block.setBlockData(sw, false);
+            sessions.put(uuid, newPowered);
 
-                event.setCancelled(true);
-                event.setUseInteractedBlock(Event.Result.DENY);
-                event.setUseItemInHand(Event.Result.DENY);
-                placeBlockAt(player, block.getLocation(), block.getType(), sw);
-            }
+            event.setCancelled(true);
+            event.setUseInteractedBlock(Event.Result.DENY);
+            event.setUseItemInHand(Event.Result.DENY);
+            placeBlockAt(player, block.getLocation(), block.getType(), sw);
         }
         // Shift-place: use saved powered state
-        else if (player.isSneaking() && handMat.isBlock() && isSwitch(handMat)) {
+        else if (player.isSneaking() && handMat.createBlockData() instanceof Switch sw) {
             var placementLocation = getPlaceableLocation(event);
             if (placementLocation == null) return;
 
@@ -78,7 +74,6 @@ public class SwitchInteraction extends InteractionHandler {
             event.setUseInteractedBlock(Event.Result.DENY);
             event.setUseItemInHand(Event.Result.DENY);
 
-            Switch sw = (Switch) handMat.createBlockData();
             sw.setPowered(sessions.getOrDefault(uuid, false));
 
             // Placement logic for face/facing
@@ -91,9 +86,5 @@ public class SwitchInteraction extends InteractionHandler {
 
             placeBlockAt(player, placementLocation, handMat, sw);
         }
-    }
-
-    private static boolean isSwitch(Material mat) {
-        return mat.name().endsWith("_BUTTON") || mat == Material.LEVER;
     }
 }
